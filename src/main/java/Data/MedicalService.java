@@ -1,4 +1,4 @@
-package org.example;
+package Data;
 
 public class MedicalService {
     private String name;

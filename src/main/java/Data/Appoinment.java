@@ -1,7 +1,6 @@
-package org.example;
+package Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Appoinment {
     private int id;
