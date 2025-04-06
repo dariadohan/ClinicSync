@@ -2,14 +2,14 @@ package Data;
 
 import java.time.LocalDateTime;
 
-public class Appoinment {
+public class Appointment {
     private int id;
-    private Pacient pacient;
-    private Doctor doctor;
+    private User pacient;
+    private User doctor;
     private LocalDateTime dateTime;
     private MedicalService service;
     private String status;
-    public Appoinment(int id, Pacient pacient, Doctor doctor, LocalDateTime dateTime, MedicalService service, String status){
+    public Appointment(int id, User pacient, User doctor, LocalDateTime dateTime, MedicalService service, String status){
         this.id=id;
         this.pacient=pacient;
         this.doctor=doctor;
