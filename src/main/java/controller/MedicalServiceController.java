@@ -14,6 +14,10 @@ public class MedicalServiceController {
         serviceService = new MedicalServiceService();
     }
 
+    public static void setDependencies(MedicalServiceService medicalServiceService) {
+        serviceService = medicalServiceService;
+    }
+
     // Create a new medical service
     public boolean createService(String name, float price, int duration) {
         if (name == null || name.isBlank()) {
@@ -51,5 +55,9 @@ public class MedicalServiceController {
     public boolean deleteService(int id) {
         System.out.println("Deleting service with ID: " + id);
         return serviceService.deleteServiceById(id);
+    }
+
+    public static String getMedicalServiceNameById(int id) {
+        return serviceService.getMedicalServiceNameById(id);
     }
 }

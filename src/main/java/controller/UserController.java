@@ -69,11 +69,15 @@ public class UserController {
 
     public static List<User> fetchUsersByRole(Role role) {
         System.out.println("Fetching users with role: " + role);
-        return userService.fetchUsersByRole(role);
+        return UserService.fetchUsersByRole(role);
     }
 
     public Optional<User> getUserByEmail(String email) {
         System.out.println("Fetching user with email: " + email);
-        return userService.getUserByEmail(email);
+        return UserService.getUserByEmail(email);
+    }
+
+    public static String getDoctorNameById(int doctorId) {
+        return userService.getDoctorNameById(doctorId);
     }
 }

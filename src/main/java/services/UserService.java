@@ -60,10 +60,10 @@ public class UserService {
             return null;
         }
 
-        boolean success = userDAO.loginUser(username, password);
-        if (success) {
+        User user = userDAO.getUserByCredentials(username, password);
+        if (user != null) {
             System.out.println("Authentication successful.");
-            return userDAO.findByUsername(username).orElse(null);
+            return user;
         } else {
             System.out.println("\033[31mAuthentication failed.\033[0m");
             return null;
@@ -108,5 +108,9 @@ public class UserService {
 
     public static List<User> fetchUsersByRole(Role role) {
         return userDAO.findUsersByRole(role);
+    }
+
+    public String getDoctorNameById(int doctorId) {
+        return userDAO.getDoctorNameById(doctorId);
     }
 }

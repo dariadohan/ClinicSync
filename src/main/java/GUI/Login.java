@@ -46,7 +46,8 @@ public class Login extends JFrame {
                             System.out.println("Doctor logged in.");
                             break;
                         case RECEPTIONIST:
-                            System.out.println("Receptionist logged in.");
+                            DashBoardR dashBoardR=new DashBoardR();
+                            dispose();
                             break;
                         case PATIENT:
                             System.out.println("Patient logged in.");

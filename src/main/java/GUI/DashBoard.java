@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class DashBoard extends JFrame{
     private JPanel dbPA;
@@ -39,7 +40,11 @@ public class DashBoard extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                DashBoardAR dashboardar= new DashBoardAR();
+                try {
+                    DashBoardAR dashboardar= new DashBoardAR();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }

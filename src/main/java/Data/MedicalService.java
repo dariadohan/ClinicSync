@@ -23,6 +23,9 @@ public class MedicalService {
 
     }
 
+    public MedicalService(int id, String name) {
+    }
+
     public int getId() {
         return id;
     }

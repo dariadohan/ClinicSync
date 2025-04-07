@@ -114,7 +114,7 @@ public class DashBoardAD extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new MainFrame();
+                new MainFrame(false);
             }
         });
 

@@ -63,26 +63,40 @@ public class UserDAO {
     }
 
     // Validate login credentials
-    public boolean loginUser(String username, String password) {
-        String query = "SELECT password FROM user WHERE username = ?";
-
+    public User getUserByCredentials(String username, String password) {
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
+            stmt.setString(2, password);
+
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                String storedHashedPassword = rs.getString("password");
-                return BCrypt.checkpw(password, storedHashedPassword);
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String cnp = rs.getString("cnp");
+                String phoneNo = rs.getString("phone_no");
+
+                Role role = Role.valueOf(rs.getString("role"));
+                Specialty specialty = null;
+                if (role == Role.DOCTOR) {
+                    specialty = Specialty.valueOf(rs.getString("specialty"));
+                }
+
+                return new User(id, name, email, username, password, cnp, phoneNo, specialty, role);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return false;
+        return null;
     }
+
+
     public Optional<User> findByEmail(String email) {
         String query = "SELECT * FROM user WHERE email = ?";
 
@@ -113,6 +127,39 @@ public class UserDAO {
 
         return Optional.empty();
     }
+
+    public User findById(int id) {
+        String query = "SELECT * FROM user WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                User user = new User(
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("CNP"),
+                        rs.getString("phoneNo"),
+                        null, // specialty placeholder
+                        Role.valueOf(rs.getString("role").toUpperCase())
+                );
+
+                user.setId(id); // if your User class has a setter for id
+                return user;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     public Optional<User> findByUsername(String username) {
         String query = "SELECT * FROM user WHERE username = ?";
@@ -246,7 +293,7 @@ public class UserDAO {
                         rs.getString("CNP"),
                         rs.getString("phoneNo"),
                         specialty,
-                        Role.valueOf(rs.getString("role").toUpperCase()) // Convert role string to enum
+                        Role.valueOf(rs.getString("role").toUpperCase())
                 );
 
                 users.add(user);
@@ -276,6 +323,27 @@ public class UserDAO {
             System.out.println("Error deleting user with email: " + email);
             return false;
         }
+    }
+
+    public String getDoctorNameById(int doctorId) {
+        String name = null;
+        String sql = "SELECT name FROM user WHERE id = ? AND role = 'DOCTOR'";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, doctorId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                name = rs.getString("name");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return name;
     }
 
 }

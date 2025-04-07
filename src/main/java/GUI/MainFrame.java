@@ -23,7 +23,7 @@ public class MainFrame extends JFrame {
     private JComboBox<Role> comboBox3; // JComboBox for selecting specialty
     private JTextField phoneNoTF;
 
-    public MainFrame() {
+    public MainFrame(boolean fromReceptionist) {
         super();
         this.setContentPane(mainP);
         this.setSize(new Dimension(650, 530));
@@ -33,6 +33,13 @@ public class MainFrame extends JFrame {
 
         comboBox3.setModel(new DefaultComboBoxModel<>(Role.values()));
         comboBox1.setModel(new DefaultComboBoxModel<>(Specialty.values()));
+
+        if (fromReceptionist) {
+            comboBox3.setEnabled(false);
+            comboBox3.setSelectedItem(Role.PATIENT);
+
+            comboBox1.setEnabled(false);
+        }
 
         // Register Button Action
         registerButton.addActionListener(new ActionListener() {

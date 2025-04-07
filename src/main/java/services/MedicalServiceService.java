@@ -66,4 +66,8 @@ public class MedicalServiceService {
     public Optional<MedicalService> getServiceById(int id) {
         return medicalServiceDAO.findById(id);
     }
+
+    public static String getMedicalServiceNameById(int id) {
+        return medicalServiceDAO.getMedicalServiceNameById(id);
+    }
 }

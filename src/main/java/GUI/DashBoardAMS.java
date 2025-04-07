@@ -29,7 +29,7 @@ public class DashBoardAMS extends JFrame {
         this.setLayout(new BorderLayout());
 
         JPanel topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        topPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         topPanel.add(backButton);
         mainP.add(topPanel, BorderLayout.NORTH);
 
@@ -76,6 +76,7 @@ public class DashBoardAMS extends JFrame {
 
         backButton.addActionListener(e -> {
             dispose();
+            new DashBoard();
         });
 
         this.setVisible(true);
